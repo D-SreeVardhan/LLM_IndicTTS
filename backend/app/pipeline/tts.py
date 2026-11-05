@@ -70,10 +70,9 @@ _MD_PATTERNS: list[tuple[re.Pattern, str]] = [
     (re.compile(r"\s{2,}"),                          " "),
 ]
 
-# Max characters to synthesise — keeps generation under ~30 s on CPU
-# Parler-TTS runs ~6x slower than real time on an M1 Pro, so only the first
-# ~2 sentences are spoken; the full answer is shown on screen.
-_MAX_TTS_CHARS = 200
+# Safety limit only: answers are 3–5 sentences, so the whole answer is spoken.
+# Longer text is cut at a sentence end, or failing that a word boundary, never mid-word.
+_MAX_TTS_CHARS = 700
 
 # Hindi ends sentences with the danda (।), not a full stop
 _SENTENCE_ENDS = ".!?।"
@@ -84,11 +83,13 @@ def _clean_for_tts(text: str) -> str:
     for pattern, repl in _MD_PATTERNS:
         text = pattern.sub(repl, text)
     text = text.strip()
-    # Truncate gracefully at a sentence boundary
     if len(text) > _MAX_TTS_CHARS:
         truncated = text[:_MAX_TTS_CHARS]
         last_break = max(truncated.rfind(f"{p} ") for p in _SENTENCE_ENDS)
-        text = truncated[: last_break + 1] if last_break > 80 else truncated
+        if last_break > _MAX_TTS_CHARS // 2:
+            text = truncated[: last_break + 1]
+        else:
+            text = truncated[: truncated.rfind(" ")].rstrip(" ,")
     # Ensure text ends with punctuation so the model stops cleanly
     if text and text[-1] not in _SENTENCE_ENDS:
         text += "."
@@ -168,17 +169,36 @@ _SPEAKER_DESC: dict[LangCode, str] = {
 
 _SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?।])\s+")
 _MIN_SEGMENT_CHARS = 30    # merge fragments shorter than this into the previous segment
-_MAX_SEGMENT_CHARS = 180   # split longer sentences at commas
-_TOKENS_PER_CHAR = 12      # generous audio-token budget per character (generation stops at EOS)
+_MAX_SEGMENT_CHARS = 90    # split longer sentences at a comma, else at a space
+_TOKENS_PER_CHAR = 15      # audio-token budget per character; generation stops at EOS
+_MAX_NEW_TOKENS = 2600     # ~30 s of audio, well above any segment
 _PAUSE_S = 0.3
+# Speech measured at ~13.5 chars/s; a take faster than this ended early and dropped words.
+_MAX_CHARS_PER_S = 20
+
+
+def _split_point(sentence: str) -> int:
+    """Index to cut a too-long sentence at: last comma, else last space, within the limit."""
+    window = sentence[: _MAX_SEGMENT_CHARS]
+    comma = window.rfind(", ")
+    if comma >= _MIN_SEGMENT_CHARS:
+        return comma + 1
+    space = window.rfind(" ")
+    return space if space >= _MIN_SEGMENT_CHARS else _MAX_SEGMENT_CHARS
 
 
 def _segments(text: str) -> list[str]:
-    """Split into sentence-sized segments so they can be synthesised as one parallel batch."""
+    """Split into short segments so they can be synthesised as one parallel batch."""
     segments: list[str] = []
+    carry = ""  # a short opening fragment such as "ಬಿ." (B.) is spoken with what follows
     for sentence in _SENTENCE_SPLIT_RE.split(text):
-        while len(sentence) > _MAX_SEGMENT_CHARS and ", " in sentence[: _MAX_SEGMENT_CHARS]:
-            cut = sentence.rindex(", ", 0, _MAX_SEGMENT_CHARS) + 1
+        sentence = f"{carry} {sentence}".strip()
+        carry = ""
+        if not segments and len(sentence) < _MIN_SEGMENT_CHARS:
+            carry = sentence
+            continue
+        while len(sentence) > _MAX_SEGMENT_CHARS:
+            cut = _split_point(sentence)
             segments.append(sentence[:cut].strip())
             sentence = sentence[cut:].strip()
         if not sentence:
@@ -187,32 +207,17 @@ def _segments(text: str) -> list[str]:
             segments[-1] = f"{segments[-1]} {sentence}"
         else:
             segments.append(sentence)
+    if carry:
+        segments.append(carry)
     return segments
 
 
-def synthesize(text: str, lang: LangCode) -> tuple[bytes, float]:
-    """
-    Synthesise text to speech with Indic Parler-TTS.
-
-    Sentences are generated as one batch (parallel decoding) and joined with
-    short pauses, so long answers are neither truncated nor serialised.
-    Returns (wav_bytes, latency_ms); wav_bytes is empty if the model is unavailable.
-    """
-    t0 = time.perf_counter()
-
-    clean_text = _clean_for_tts(text)
-    segments = _segments(clean_text) or [clean_text]
-    logger.debug(f"TTS [{lang}] {len(clean_text)} chars in {len(segments)} segment(s): {clean_text[:80]!r}")
-
-    _load()
-    if _tts_model is None:
-        return b"", round((time.perf_counter() - t0) * 1000, 1)
-
+def _generate(segments: list[str], description: str) -> list[np.ndarray]:
+    """Synthesise segments as one padded batch; each result is trimmed to its own length."""
     device = _tts_model.device
-    description = _SPEAKER_DESC.get(lang, _SPEAKER_DESC["en"])
     desc_inputs = _desc_tokenizer([description] * len(segments), return_tensors="pt", padding=True).to(device)
     text_inputs = _tts_tokenizer(segments, return_tensors="pt", padding=True).to(device)
-    max_tokens = min(2500, max(len(s) for s in segments) * _TOKENS_PER_CHAR)
+    max_tokens = min(_MAX_NEW_TOKENS, max(len(s) for s in segments) * _TOKENS_PER_CHAR)
 
     with torch.no_grad():
         output = _tts_model.generate(
@@ -225,12 +230,47 @@ def synthesize(text: str, lang: LangCode) -> tuple[bytes, float]:
             temperature=1.0,
             return_dict_in_generate=True,
         )
+    return [
+        audio[: int(length)].astype(np.float32)
+        for audio, length in zip(output.sequences.float().cpu().numpy(), output.audios_length)
+    ]
 
+
+def synthesize(text: str, lang: LangCode) -> tuple[bytes, float]:
+    """
+    Synthesise text to speech with Indic Parler-TTS.
+
+    Segments are generated as one batch (parallel decoding) and joined with
+    short pauses; segments that ended early are regenerated once.
+    Returns (wav_bytes, latency_ms); wav_bytes is empty if the model is unavailable.
+    """
+    t0 = time.perf_counter()
+
+    clean_text = _clean_for_tts(text)
+    segments = _segments(clean_text) or [clean_text]
+    logger.debug(f"TTS [{lang}] {len(clean_text)} chars in {len(segments)} segment(s): {clean_text[:80]!r}")
+
+    _load()
+    if _tts_model is None:
+        return b"", round((time.perf_counter() - t0) * 1000, 1)
+
+    description = _SPEAKER_DESC.get(lang, _SPEAKER_DESC["en"])
     sample_rate: int = getattr(_tts_model.config, "sampling_rate", None) or 44100
+    takes = _generate(segments, description)
+
+    # Sampling sometimes stops a segment early; regenerate those once and keep the longer take.
+    short = [i for i, (seg, audio) in enumerate(zip(segments, takes))
+             if len(audio) / sample_rate < len(seg) / _MAX_CHARS_PER_S]
+    if short:
+        logger.debug(f"TTS [{lang}] retrying {len(short)} segment(s) that ended early")
+        for i, audio in zip(short, _generate([segments[i] for i in short], description)):
+            if len(audio) > len(takes[i]):
+                takes[i] = audio
+
     pause = np.zeros(int(sample_rate * _PAUSE_S), dtype=np.float32)
     pieces: list[np.ndarray] = []
-    for audio, length in zip(output.sequences.float().cpu().numpy(), output.audios_length):
-        pieces += [audio[: int(length)].astype(np.float32), pause]
+    for audio in takes:
+        pieces += [audio, pause]
     audio_arr = np.concatenate(pieces[:-1]) if pieces else pause
 
     buf = io.BytesIO()
@@ -240,6 +280,6 @@ def synthesize(text: str, lang: LangCode) -> tuple[bytes, float]:
     ms = (time.perf_counter() - t0) * 1000
     logger.debug(
         f"TTS [{lang}] {ms:.0f}ms – {len(audio_arr) / sample_rate:.1f}s audio, "
-        f"{len(segments)} segment(s), budget {max_tokens} tokens"
+        f"{len(segments)} segment(s), {len(short)} retried"
     )
     return wav_bytes, round(ms, 1)
