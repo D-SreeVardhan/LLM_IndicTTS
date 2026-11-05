@@ -532,6 +532,19 @@ def _catalogue_overview() -> str:
 
 # ── Main router ───────────────────────────────────────────────────────────
 
+# Topics answered by the campus guide passages. The tools' keywords are broad ("fee",
+# "when", "offered"), so "hostel fee" or "clubs offered" would otherwise get a wrong tool answer.
+_CAMPUS_GUIDE_TOPICS = re.compile(
+    r"\b(hostels?|mess|warden|bus|buses|transport|shuttle|metro|library|canteen|cafeteria|food|"
+    r"wi-?fi|internet|it helpdesk|medical cent(?:re|er)|doctor|insurance|counsell?(?:ing|ors?)|"
+    r"wellbeing|mental health|ragging|grievances?|complaints?|harassment|clubs?|fest|festival|"
+    r"gym|sports facilit\w*|bonafide|transcripts?|migration|certificates?|id card|identity card|"
+    r"portal|lms|mentors?|internships?|exchange|study abroad|parking|dress code|contacts?|"
+    r"office hours|address|located|location|reach)\b",
+    re.I,
+)
+
+
 def tool_route(query: str) -> dict | None:
     """
     Try structured tools before falling back to RAG.
@@ -542,6 +555,8 @@ def tool_route(query: str) -> dict | None:
         chunk_id – synthetic chunk id for citation
     Or None if no tool matched.
     """
+    if _CAMPUS_GUIDE_TOPICS.search(query):
+        return None
     for tool_name, fn in [
         ("fee", _fee_answer),
         ("calendar", _calendar_answer),

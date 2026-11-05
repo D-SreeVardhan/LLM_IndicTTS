@@ -150,7 +150,9 @@ def run(
             answer_en = guard.refusal_message(None, top_cat)
             citations = []
         else:
-            citations = _extract_citations(answer_en, chunks)
+            # Param-1 sometimes omits [S1] tags; the answer still came from the top passage
+            # (it is [S1] in the prompt), and showing it keeps "synthetic demo data" visible.
+            citations = _extract_citations(answer_en, chunks) or _extract_citations("[S1]", chunks)
             # Sources are shown as chips; inline [S1] tags only hurt translation and TTS.
             answer_en = re.sub(r"\s*\[S\d+\]", "", answer_en).strip()
 

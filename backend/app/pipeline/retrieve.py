@@ -7,6 +7,7 @@ Loads chunks.jsonl and the pre-built embedding index from data/processed/.
 
 import json
 import os
+import re
 import time
 from pathlib import Path
 from typing import Optional
@@ -27,6 +28,14 @@ _embedder = None
 _embeddings: Optional[np.ndarray] = None
 
 
+_WORD_RE = re.compile(r"[^\W_]+")
+
+
+def _tokens(text: str) -> list[str]:
+    """Lower-cased words without punctuation, so "fee?" and "fee," both match "fee"."""
+    return _WORD_RE.findall(text.lower())
+
+
 def _load_corpus():
     global _chunks, _bm25, _embeddings
 
@@ -45,7 +54,7 @@ def _load_corpus():
     # BM25
     try:
         from rank_bm25 import BM25Okapi
-        tokenized = [c["text"].lower().split() for c in _chunks]
+        tokenized = [_tokens(c["text"]) for c in _chunks]
         _bm25 = BM25Okapi(tokenized)
         logger.success("BM25 index built.")
     except ImportError:
@@ -108,7 +117,7 @@ def _bm25_scores(query: str, k: int) -> list[tuple[int, float]]:
     """Return [(chunk_idx, normalised_score), ...]."""
     if _bm25 is None or not _chunks:
         return []
-    tokens = query.lower().split()
+    tokens = _tokens(query)
     raw = _bm25.get_scores(tokens)
     max_score = float(raw.max()) if raw.max() > 0 else 1.0
     top_k = np.argsort(raw)[::-1][:k]

@@ -1,0 +1,12 @@
+{
+  "top_k": 5,
+  "n_in_scope": 11,
+  "recall_at_k_pct": {
+    "bm25": 81.8,
+    "dense": 81.8,
+    "hybrid": 81.8
+  },
+  "tool_answered": 8,
+  "tool_key_fact_accuracy_pct": 81.2,
+  "tool_false_matches_out_of_scope": 0
+}

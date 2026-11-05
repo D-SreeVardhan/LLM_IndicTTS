@@ -9,10 +9,12 @@ Full ingestion pipeline:
   4. Parse fee table  → data/processed/fees.json
   5. Parse calendars  → data/processed/calendar.json
   6. Chunk all text   → data/processed/chunks.jsonl
+     (official sources plus the synthetic campus guide in data/raw/synthetic/)
   7. Embed chunks     → data/processed/index/
 
 Run:
     python scripts/ingest.py [--rebuild-index]
+    python scripts/ingest.py --synthetic-only   # refresh only the synthetic guide, re-embed
 """
 
 import argparse
@@ -32,6 +34,7 @@ from loguru import logger
 
 RAW_PDF_DIR = ROOT / "data" / "raw" / "pdfs"
 RAW_WEB_DIR = ROOT / "data" / "raw" / "web"
+SYNTHETIC_DIR = ROOT / "data" / "raw" / "synthetic"
 PROCESSED_DIR = ROOT / "data" / "processed"
 INDEX_DIR = PROCESSED_DIR / "index"
 
@@ -102,6 +105,15 @@ LOCAL_PDFS = [
         "filename": "Programme Outcomes 2025.pdf",
         "category": "policy",
         "needs_ocr": True,  # Scanned – needs Apple Vision OCR
+    },
+]
+
+# Written for the demo, not published by RVU; the title says so wherever it is cited.
+SYNTHETIC_SOURCES = [
+    {
+        "title": "RVU Campus Guide (synthetic demo data)",
+        "filename": "rvu_campus_guide.md",
+        "category": "campus",
     },
 ]
 
@@ -312,6 +324,23 @@ def extract_pdfs() -> list[dict[str, Any]]:
     return all_chunks
 
 
+# ── Synthetic campus guide ───────────────────────────────────────────────
+
+def load_synthetic() -> list[dict[str, Any]]:
+    chunks: list[dict[str, Any]] = []
+    for src in SYNTHETIC_SOURCES:
+        path = SYNTHETIC_DIR / src["filename"]
+        if not path.exists():
+            logger.warning(f"  Missing synthetic source: {path}")
+            continue
+        sections = _split_into_chunks(path.read_text(encoding="utf-8"), src)
+        # The H1 block is only the disclaimer; each "## Topic" section becomes one passage.
+        kept = [c for c in sections if not c["text"].startswith("# ")]
+        chunks.extend(kept)
+        logger.info(f"  {src['title']}: {len(kept)} chunks")
+    return chunks
+
+
 # ── Step 5: Build fees.json ────────────────────────────────────────────────
 
 def build_fees_table() -> None:
@@ -482,13 +511,41 @@ def build_index(chunks: list[dict[str, Any]]) -> None:
     logger.success(f"  Dense index saved: {embeddings.shape}")
 
 
+def write_chunks(chunks: list[dict[str, Any]]) -> None:
+    chunks_path = PROCESSED_DIR / "chunks.jsonl"
+    with chunks_path.open("w", encoding="utf-8") as f:
+        for c in chunks:
+            f.write(json.dumps(c, ensure_ascii=False) + "\n")
+    logger.success(f"  chunks.jsonl → {len(chunks)} chunks")
+
+
+def refresh_synthetic() -> None:
+    """Replace the synthetic chunks in chunks.jsonl and rebuild the dense index."""
+    chunks_path = PROCESSED_DIR / "chunks.jsonl"
+    synthetic_titles = {s["title"] for s in SYNTHETIC_SOURCES}
+    official = [
+        c for c in (json.loads(line) for line in chunks_path.read_text(encoding="utf-8").splitlines() if line)
+        if c["title"] not in synthetic_titles
+    ]
+    chunks = official + load_synthetic()
+    logger.info(f"  {len(official)} official + {len(chunks) - len(official)} synthetic chunks")
+    write_chunks(chunks)
+    build_index(chunks)
+
+
 # ── Main ──────────────────────────────────────────────────────────────────
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--rebuild-index", action="store_true",
                         help="Re-embed even if index already exists")
+    parser.add_argument("--synthetic-only", action="store_true",
+                        help="Keep the official chunks, refresh the synthetic guide and re-embed")
     args = parser.parse_args()
+
+    if args.synthetic_only:
+        refresh_synthetic()
+        return
 
     logger.info("── Step 1: Scraping web pages ──")
     web_chunks = scrape_web()
@@ -499,7 +556,7 @@ def main() -> None:
     logger.info("── Step 3-4: Extracting PDF text ──")
     pdf_chunks = extract_pdfs()
 
-    all_chunks = web_chunks + pdf_chunks
+    all_chunks = web_chunks + pdf_chunks + load_synthetic()
     logger.info(f"  Total chunks: {len(all_chunks)}")
 
     # Deduplicate by chunk_id
@@ -511,12 +568,7 @@ def main() -> None:
             unique.append(c)
     logger.info(f"  Unique chunks: {len(unique)}")
 
-    # Write chunks.jsonl
-    chunks_path = PROCESSED_DIR / "chunks.jsonl"
-    with chunks_path.open("w", encoding="utf-8") as f:
-        for c in unique:
-            f.write(json.dumps(c, ensure_ascii=False) + "\n")
-    logger.success(f"  chunks.jsonl → {len(unique)} chunks")
+    write_chunks(unique)
 
     logger.info("── Step 5: Building fees.json ──")
     build_fees_table()

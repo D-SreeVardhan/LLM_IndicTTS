@@ -166,7 +166,28 @@ does not yet cover the LLM-answered intents.
 | Placement Policy Quick Reference 2027 (PDF) | policy |
 | Vision and Mission Statements (PDF) | policy |
 
-54 passages, 32 structured fee records and 53 calendar events.
+| RVU Campus Guide (synthetic demo data) | campus |
+
+54 official passages, 32 structured fee records and 53 calendar events, plus 21 synthetic campus-guide
+passages.
+
+The campus guide (`data/raw/synthetic/rvu_campus_guide.md`) is **made-up demo data** so the assistant can
+answer everyday student questions the official pages don't cover: hostel and bus charges, library and gym
+hours, Wi-Fi, clubs, certificates, anti-ragging, counselling, internships and key contacts. Answers drawn
+from it cite "RVU Campus Guide (synthetic demo data)". Its figures are not real RVU figures. It was added
+after the paper's evaluation, so the paper's numbers describe the official corpus only. On the expanded
+corpus, hybrid Recall@5 is 81.8% (`eval/results/summary_retrieval_with_campus_guide.json`). The two
+misses are a fee question that the fee tool answers anyway and an attendance question whose correct
+passage is retrieved under a different gold label.
+
+After editing the guide, rebuild only its passages and the index (the official passages are kept):
+
+```bash
+python scripts/ingest.py --synthetic-only
+```
+
+Questions it can now answer: "What is the hostel fee?", "Is there a bus service?", "When is the library
+open?", "How do I get a bonafide certificate?", "Who do I contact about ragging?"
 
 ## Project structure
 
@@ -188,7 +209,7 @@ LLM_Prj/
 │       └── orchestrator.py   End-to-end pipeline
 ├── frontend/                 React + TypeScript + Vite interface
 ├── data/
-│   ├── raw/                  Source PDFs and scraped pages
+│   ├── raw/                  Source PDFs, scraped pages, synthetic/ campus guide
 │   └── processed/            Passages, fee and calendar records, retrieval index
 ├── eval/
 │   ├── rag_eval.py           Gold-set evaluation and ablations
@@ -211,5 +232,8 @@ LLM_Prj/
   the English pivot by default (`HINDI_ROUTE` in `.env`).
 - **Speech synthesis runs on the CPU.** On the Apple GPU it was about twice as fast, but next to Param-1 it
   pushed the backend past 30 GB of memory on a 16 GB machine.
+- **Full answers are spoken.** The answer is split into short segments at sentence and comma boundaries
+  and synthesised as a batch. Parler-TTS sometimes stops a segment early, so any segment whose audio is
+  too short for its text is generated once more and the longer take is kept.
 - **No generic AI look.** The interface uses a campus notice-board palette (off-white paper, ink black,
   oxblood and turmeric), not the usual blue gradients.

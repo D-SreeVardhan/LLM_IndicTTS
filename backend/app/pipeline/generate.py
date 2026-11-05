@@ -92,16 +92,19 @@ _STOPWORDS = {
 
 
 def _best_window(text: str, query: str, size: int) -> str:
-    """Return the `size`-char window of `text` (sentence-aligned) with the most query-term hits."""
+    """Return the `size`-char window of `text` (sentence-aligned) covering the most query terms."""
     if len(text) <= size:
         return text
     terms = {w for w in re.findall(r"[a-z0-9]+", query.lower()) if w not in _STOPWORDS and len(w) > 2}
     starts = [0] + [m.end() for m in re.finditer(r"[.\n●•]\s*", text)]
     lower = text.lower()
 
-    def hits(start: int) -> int:
+    # Distinct terms first: for "hostel fee", the sentence with both words beats
+    # one that repeats "hostel" four times.
+    def hits(start: int) -> tuple[int, int]:
         window = lower[start:start + size]
-        return sum(window.count(t) for t in terms)
+        counts = [window.count(t) for t in terms]
+        return sum(c > 0 for c in counts), sum(counts)
 
     best = max(starts, key=hits) if terms else 0
     return text[best:best + size].strip()
