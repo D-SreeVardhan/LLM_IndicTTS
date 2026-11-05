@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+
+# Env
+.env
+
+# Data (large files)
+data/raw/web/*.html
+
+# Models (download via scripts/download_models.py)
+models/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# macOS
+.DS_Store
+__MACOSX/
+
+# Editor
+.vscode/
+.cursor/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Course hand-outs (not part of the project)
+CS3235 Research Paper Template*.docx
+CS3235-Course Project Rubrics.pdf
+~$*.docx

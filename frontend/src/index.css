@@ -1,0 +1,154 @@
+/* ───────────────────────────────────────────────
+   RVU Voice Assistant – Global Styles
+   Campus notice-board aesthetic:
+   off-white paper, oxblood red, turmeric yellow,
+   ink-black text.  No gradients, no glow orbs.
+─────────────────────────────────────────────── */
+
+:root {
+  /* Palette */
+  --paper:      #f5f0e8;
+  --paper-dark: #ece5d6;
+  --ink:        #1a1108;
+  --ink-muted:  #5c4a32;
+  --oxblood:    #7a1a1a;
+  --oxblood-light: #9e2525;
+  --turmeric:   #c8840a;
+  --turmeric-light: #e6a020;
+  --rule:       #c5b89a;
+  --rule-dark:  #9c8b72;
+
+  /* State colours */
+  --success:    #2e6b3e;
+  --error:      #9e2525;
+  --warning:    #a06820;
+
+  /* Typography */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-devanagari: 'Noto Serif Devanagari', serif;
+  --font-kannada:    'Noto Serif Kannada', serif;
+  --font-tamil:      'Noto Serif Tamil', serif;
+  --font-mono:       'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Spacing */
+  --radius: 4px;
+  --radius-lg: 8px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-display);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Indic script rendering helpers */
+[lang="hi"], .lang-hi { font-family: var(--font-devanagari); }
+[lang="kn"], .lang-kn { font-family: var(--font-kannada); }
+[lang="ta"], .lang-ta { font-family: var(--font-tamil); }
+
+/* Horizontal rules */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 1.5rem 0;
+}
+
+/* Links */
+a {
+  color: var(--oxblood);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+a:hover { color: var(--turmeric); }
+
+/* Utility */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── Markdown answer renderer ── */
+.md-answer {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.md-answer p {
+  margin: 0 0 0.75em;
+}
+.md-answer p:last-child { margin-bottom: 0; }
+
+.md-answer strong { font-weight: 700; color: var(--ink); }
+.md-answer em     { font-style: italic; }
+
+.md-answer ul,
+.md-answer ol {
+  margin: 0.5em 0 0.75em 1.4em;
+  padding: 0;
+}
+.md-answer li { margin-bottom: 0.3em; }
+
+/* Tables — used by fee structure, calendar, placement */
+.md-answer table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 0.75em 0 1em;
+  overflow-x: auto;
+  display: block;
+}
+.md-answer thead tr {
+  background: var(--paper-dark);
+  border-bottom: 2px solid var(--rule);
+}
+.md-answer th {
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.md-answer td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+.md-answer tbody tr:last-child td { border-bottom: none; }
+.md-answer tbody tr:hover td { background: var(--paper); }
+
+/* Inline code */
+.md-answer code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--paper-dark);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* Source attribution line (italics at end) */
+.md-answer em:only-child,
+.md-answer p > em:only-child {
+  font-size: 12px;
+  color: var(--ink-muted);
+  font-style: italic;
+}

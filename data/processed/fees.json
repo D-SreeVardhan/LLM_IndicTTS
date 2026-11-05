@@ -1,0 +1,226 @@
+[
+  {
+    "school": "School of Liberal Arts & Sciences",
+    "programme": "B.A (Hons)",
+    "specialisation": "Philosophy",
+    "intake": "60",
+    "tuition_fees": "3,60,000/-"
+  },
+  {
+    "school": "School of Liberal Arts & Sciences",
+    "programme": "B.Sc. (Hons)",
+    "specialisation": "Psychology",
+    "intake": "120",
+    "tuition_fees": "3,60,000/-"
+  },
+  {
+    "school": "School of Design & Innovation",
+    "programme": "B. Design (Hons)",
+    "specialisation": "B.Des (User Experience)",
+    "intake": "240",
+    "tuition_fees": "4,00,000/-"
+  },
+  {
+    "school": "School of Economics and public policy",
+    "programme": "BSc. (Hons)",
+    "specialisation": "Economics   · Data Analytics,   · Development Studies & Public Policy   (Offered in 5th Semester)",
+    "intake": "60",
+    "tuition_fees": "1,20,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "B.B.A (Hons)",
+    "specialisation": "Digital Marketing",
+    "intake": "300",
+    "tuition_fees": "2,25,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "B.B.A (Hons)",
+    "specialisation": "BBA(Hons)",
+    "intake": "Capital Market",
+    "tuition_fees": "2,50,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "B.B.A (Hons)",
+    "specialisation": "BBA (Hons)",
+    "intake": "BIDA – Business Intelligence and Data Analytics (with Microsoft and IoA Certification)",
+    "tuition_fees": "2,40,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "B.B.A (Hons)",
+    "specialisation": "BBA (Hons)",
+    "intake": "Finance, HR, Marketing and Analytics",
+    "tuition_fees": "2,25,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "B. Com (Hons)",
+    "specialisation": "Accounting & Taxation, Finance & Wealth Management",
+    "intake": "180",
+    "tuition_fees": "1,65,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "B. Com (Hons)",
+    "specialisation": "B. Com (Hons)",
+    "intake": "International Accounting (ACCA)",
+    "tuition_fees": "1,85,000/-"
+  },
+  {
+    "school": "School of Computer Science & Engineering",
+    "programme": "B. Tech (Hons) Computer Science and Engineering",
+    "specialisation": "· AIML – Artificial Intelligence and machine learning   · Data Science & Engineering   · Cloud computing   · Cyber security",
+    "intake": "540",
+    "tuition_fees": "CET – 216: as per GOK."
+  },
+  {
+    "school": "School of Computer Science & Engineering",
+    "programme": "B. Sc (Hons)",
+    "specialisation": "· Data Science   · Computer Science",
+    "intake": "120",
+    "tuition_fees": "1,75,000/-"
+  },
+  {
+    "school": "School of Computer Science & Engineering",
+    "programme": "BCA (Hons)",
+    "specialisation": "Regular",
+    "intake": "120",
+    "tuition_fees": "2,50,000/-"
+  },
+  {
+    "school": "School of Law",
+    "programme": "B.B.A LLB (Hons)",
+    "specialisation": "As approved by BCI",
+    "intake": "60",
+    "tuition_fees": "2,50,000/-"
+  },
+  {
+    "school": "School of Law",
+    "programme": "B.A. LLB (Hons)",
+    "specialisation": "As approved by BCI",
+    "intake": "60",
+    "tuition_fees": "2,50,000/-"
+  },
+  {
+    "school": "School of Law",
+    "programme": "B.Sc. (Hons)",
+    "specialisation": "Criminology, Cyber Law and Forensic Sciences",
+    "intake": "90",
+    "tuition_fees": "2,00,000"
+  },
+  {
+    "school": "School of Film, Media and Creative Arts",
+    "programme": "B.A.",
+    "specialisation": "Acting (Film, TV and OTT)",
+    "intake": "60",
+    "tuition_fees": "2,50,000/-"
+  },
+  {
+    "school": "School of Film, Media and Creative Arts",
+    "programme": "B.Sc. (Hons)",
+    "specialisation": "Animation, Visual Effects and Gaming",
+    "intake": "60",
+    "tuition_fees": "4,00,000/-"
+  },
+  {
+    "school": "School of Allied and Healthcare Professions",
+    "programme": "B.Sc. (Hons)",
+    "specialisation": "Medical Laboratory Technology(MLT)",
+    "intake": "40",
+    "tuition_fees": "1,20,000/-"
+  },
+  {
+    "school": "School of Allied and Healthcare Professions",
+    "programme": "B.Sc. (Hons)",
+    "specialisation": "Anesthesia & Operation Theatre Technology (AOTT)",
+    "intake": "40",
+    "tuition_fees": "1,75,000/-"
+  },
+  {
+    "school": "School of Allied and Healthcare Professions",
+    "programme": "B.Sc. (Hons)",
+    "specialisation": "Cardiac Care Technology (CCT)",
+    "intake": "40",
+    "tuition_fees": "2,05,000/-"
+  },
+  {
+    "school": "School of Design & Innovation",
+    "programme": "M. Design",
+    "specialisation": "M.Des (User Experience)",
+    "intake": "60",
+    "tuition_fees": "3,50,000/-"
+  },
+  {
+    "school": "School of Economics and public policy",
+    "programme": "M.Sc.",
+    "specialisation": "Economics Specialization in   1. Data Analytics   2. Development studies and Public Policy   3. Financial Economics",
+    "intake": "40",
+    "tuition_fees": "1,50,000/-"
+  },
+  {
+    "school": "School of Economics and public policy",
+    "programme": "M.A",
+    "specialisation": "Public Policy & e-Governance",
+    "intake": "60",
+    "tuition_fees": "1,50,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "MBA – Artificial Intelligence and Data Science",
+    "specialisation": "Data Science, Business Analytics, Artificial Intelligence (in collaboration with Microsoft)",
+    "intake": "180",
+    "tuition_fees": "6,25,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "MBA – Artificial Intelligence and Data Science",
+    "specialisation": "MBA – Global Financial Markets",
+    "intake": "Finance (in collaboration with NSE Academy)",
+    "tuition_fees": "6,25,000/-"
+  },
+  {
+    "school": "School of Business",
+    "programme": "MBA – Artificial Intelligence and Data Science",
+    "specialisation": "MBA (Regular)",
+    "intake": "Specialization Analytics, Entrepreneurship, Finance, HROB, Marketing",
+    "tuition_fees": "5,50,000/-"
+  },
+  {
+    "school": "School of Computer Science and Engineering",
+    "programme": "M. Tech",
+    "specialisation": "Computer Science & Engineering",
+    "intake": "24",
+    "tuition_fees": "PGCET – 10: as per   GOK   RVU – 14: 3,75,000/-"
+  },
+  {
+    "school": "School of Law",
+    "programme": "L.L.M.",
+    "specialisation": "General",
+    "intake": "60",
+    "tuition_fees": "2,00,000/-"
+  },
+  {
+    "school": "School of Film, Media and Creative Arts",
+    "programme": "M.Sc.",
+    "specialisation": "Film Making",
+    "intake": "30",
+    "tuition_fees": "1,90,000/-"
+  },
+  {
+    "school": "School for Continuing Education and Professional Studies",
+    "programme": "EMBA",
+    "specialisation": "Finance, Marketing, HR, Operations and Entrepreneurship",
+    "intake": "30",
+    "tuition_fees": "1,34,000/-"
+  },
+  {
+    "school": "School of Liberal Arts and Sciences",
+    "programme": "M.Sc.",
+    "specialisation": "Psychology",
+    "intake": "60",
+    "tuition_fees": "1,75,000/-"
+  }
+]

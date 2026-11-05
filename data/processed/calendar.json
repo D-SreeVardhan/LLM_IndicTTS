@@ -1,0 +1,320 @@
+[
+  {
+    "type": "PG",
+    "activity": "Inauguration & Induction",
+    "start_date": "25th September 2026",
+    "end_date": "26th September 2026"
+  },
+  {
+    "type": "PG",
+    "activity": "Instructions:   PG Programmes: I Semester",
+    "start_date": "28th September 2026",
+    "end_date": "08th January 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Preparation Leave #",
+    "start_date": "09th January 2027",
+    "end_date": "12th January 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "CIE Finalization & SEE Eligibility",
+    "start_date": "11th January 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "Hall Ticket",
+    "start_date": "12th January 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "SEE Practical, Jury & Submission",
+    "start_date": "13th January 2027",
+    "end_date": "18th January 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Sem-End Examination (Theory)",
+    "start_date": "19th January 2027",
+    "end_date": "30th January 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Semester Break",
+    "start_date": "31st January 2027",
+    "end_date": "07th February 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Review of Results",
+    "start_date": "04th February 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "Declaration of Results",
+    "start_date": "5th February 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "Paper Viewing (PVP)",
+    "start_date": "08th February 2027",
+    "end_date": "12th February 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Instructions",
+    "start_date": "08th February 2027",
+    "end_date": "14th May 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Preparation Leave #",
+    "start_date": "15th May 2027",
+    "end_date": "18th May 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "CIE Finalization & SEE Eligibility",
+    "start_date": "17th May 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "Hall Ticket",
+    "start_date": "18th May 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "SEE Practical, Jury & Submission",
+    "start_date": "19th May 2027",
+    "end_date": "24th May 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Sem-End Examination (Theory)",
+    "start_date": "25th May 2027",
+    "end_date": "04th June 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Internship/Semester Break",
+    "start_date": "07th June 2027",
+    "end_date": "30th July 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Review of Results",
+    "start_date": "9th June 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "Declaration of Results",
+    "start_date": "11th June 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "Paper Viewing (PVP)",
+    "start_date": "14th June 2027",
+    "end_date": "18th June 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Summer Semester Instruction Classes",
+    "start_date": "21st June 2027",
+    "end_date": "09th July 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Summer Semester SEE",
+    "start_date": "12th July 2027",
+    "end_date": "19th July 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Summer Semester Results",
+    "start_date": "26th July 2027",
+    "end_date": ""
+  },
+  {
+    "type": "PG",
+    "activity": "Registration to AY 2027-28",
+    "start_date": "26th July 2027",
+    "end_date": "30th July 2027"
+  },
+  {
+    "type": "PG",
+    "activity": "Convocation",
+    "start_date": "22nd August 2027(Tentative)",
+    "end_date": ""
+  },
+  {
+    "type": "UG",
+    "activity": "Inauguration & Induction",
+    "start_date": "27th July 2026",
+    "end_date": "31st July 2026"
+  },
+  {
+    "type": "UG",
+    "activity": "Instructions:   UG Programmes: III, V, VII Semester  PG Programmes: III Semester",
+    "start_date": "03rd August 2026",
+    "end_date": "20th November 2026"
+  },
+  {
+    "type": "UG",
+    "activity": "Preparation Leave",
+    "start_date": "21st November 2026",
+    "end_date": "24th November 2026"
+  },
+  {
+    "type": "UG",
+    "activity": "CIE Finalization & SEE Eligibility",
+    "start_date": "18th November 2026",
+    "end_date": "20th November 2026"
+  },
+  {
+    "type": "UG",
+    "activity": "Hall Ticket",
+    "start_date": "23rd November 2026",
+    "end_date": "24th November 2026"
+  },
+  {
+    "type": "UG",
+    "activity": "Practical & Jury Submission",
+    "start_date": "26th November 2026",
+    "end_date": "05th December 2026"
+  },
+  {
+    "type": "UG",
+    "activity": "Sem-End Examination",
+    "start_date": "07th December 2026",
+    "end_date": "31st December 2026"
+  },
+  {
+    "type": "UG",
+    "activity": "Semester Break",
+    "start_date": "01st January 2027",
+    "end_date": "10th January 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Review of Results",
+    "start_date": "–",
+    "end_date": "06th January 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Declaration of Results",
+    "start_date": "–",
+    "end_date": "11th January 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Paper Viewing (PVP)",
+    "start_date": "15th January 2027",
+    "end_date": "18th January 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Instructions",
+    "start_date": "11th January 2027",
+    "end_date": "30th April 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Preparation Leave",
+    "start_date": "01st May 2027",
+    "end_date": "05th May 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "CIE Finalization & SEE Eligibility",
+    "start_date": "28th April 2027",
+    "end_date": "30th April 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Hall ticket",
+    "start_date": "03rd May 2027",
+    "end_date": "04th May 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Practical & Jury Submission",
+    "start_date": "06th May 2027",
+    "end_date": "15th May 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Sem-End Examination",
+    "start_date": "18th May 2027",
+    "end_date": "05th June 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Internship/Semester Break",
+    "start_date": "06th June 2027",
+    "end_date": "30th July 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Review of Results",
+    "start_date": "–",
+    "end_date": "07th June 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Declaration of Results",
+    "start_date": "–",
+    "end_date": "11th June 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Paper Viewing (PVP)",
+    "start_date": "14th June 2027",
+    "end_date": "18th June 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Summer Semester Instruction Classes",
+    "start_date": "7th June 2027",
+    "end_date": "25th June 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Summer Semester SEE + Practical",
+    "start_date": "28th June 2027",
+    "end_date": "13th July 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Summer Semester Result Review",
+    "start_date": "–",
+    "end_date": "22nd July 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Declaration of Summer Semester Results",
+    "start_date": "–",
+    "end_date": "26th July 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Registration to AY 2027-28",
+    "start_date": "26th July 2027",
+    "end_date": "30th July 2027"
+  },
+  {
+    "type": "UG",
+    "activity": "Convocation",
+    "start_date": "22nd August 2027(Tentative)",
+    "end_date": ""
+  }
+]

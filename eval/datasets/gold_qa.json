@@ -1,0 +1,155 @@
+[
+  {
+    "id": "f01",
+    "lang": "en",
+    "in_scope": true,
+    "question": "What is the annual tuition fee for B.Tech (AIML) at RVU under the JEE-Mains seat category for AY 2026-27?",
+    "gold_answer": "₹5,00,000 per annum",
+    "key_facts": [
+      "5,00,000",
+      "500000"
+    ],
+    "source_category": "fees"
+  },
+  {
+    "id": "f02",
+    "lang": "en",
+    "in_scope": true,
+    "question": "How much is the tuition fee for MBA at RVU?",
+    "gold_answer": "MBA tuition fees are ₹5,50,000 (Regular) or ₹6,25,000 (AI & Data Science / Global Financial Markets).",
+    "key_facts": [
+      "5,50,000",
+      "6,25,000"
+    ],
+    "source_category": "fees"
+  },
+  {
+    "id": "f03",
+    "lang": "en",
+    "in_scope": true,
+    "question": "What is the BCA fee at RVU?",
+    "gold_answer": "₹2,50,000 tuition fee plus ₹21,000 skill/exam fees per year.",
+    "key_facts": [
+      "2,50,000",
+      "21,000"
+    ],
+    "source_category": "fees"
+  },
+  {
+    "id": "e01",
+    "lang": "en",
+    "in_scope": true,
+    "question": "When are the UG Semester End Examinations for the odd semester AY 2026-27?",
+    "gold_answer": "7th December 2026 to 31st December 2026",
+    "key_facts": [
+      "7th december 2026",
+      "31st december 2026"
+    ],
+    "source_category": "exams"
+  },
+  {
+    "id": "e02",
+    "lang": "en",
+    "in_scope": true,
+    "question": "What is the minimum CIE score required to appear for SEE at RVU?",
+    "gold_answer": "Students must score at least 40% in CIE to appear for SEE.",
+    "key_facts": [
+      "40"
+    ],
+    "source_category": "exams"
+  },
+  {
+    "id": "e03",
+    "lang": "en",
+    "in_scope": true,
+    "question": "When are hall tickets issued for the even semester 2027?",
+    "gold_answer": "3rd May 2027 to 4th May 2027",
+    "key_facts": [
+      "3rd may 2027",
+      "4th may 2027"
+    ],
+    "source_category": "exams"
+  },
+  {
+    "id": "e04",
+    "lang": "en",
+    "in_scope": true,
+    "question": "What attendance percentage is mandatory at RVU?",
+    "gold_answer": "Students must maintain 80% attendance in every course.",
+    "key_facts": [
+      "80"
+    ],
+    "source_category": "exams"
+  },
+  {
+    "id": "a01",
+    "lang": "en",
+    "in_scope": true,
+    "question": "If a student cancels admission between 16 August 2026 and 30 August 2026, what refund do they get?",
+    "gold_answer": "90% refund of first year full fees.",
+    "key_facts": [
+      "90"
+    ],
+    "source_category": "admissions"
+  },
+  {
+    "id": "a02",
+    "lang": "en",
+    "in_scope": true,
+    "question": "When does the UG induction start for AY 2026-27?",
+    "gold_answer": "27th July 2026",
+    "key_facts": [
+      "27th july 2026"
+    ],
+    "source_category": "exams"
+  },
+  {
+    "id": "p01",
+    "lang": "en",
+    "in_scope": true,
+    "question": "How many company drives can a student attend at RVU placements?",
+    "gold_answer": "A student may attend a maximum of 5 notified placement drives per cycle.",
+    "key_facts": [
+      "5"
+    ],
+    "source_category": "policy"
+  },
+  {
+    "id": "p02",
+    "lang": "en",
+    "in_scope": true,
+    "question": "What CTC threshold applies for the 1.5x offer progression rule?",
+    "gold_answer": "The student's existing offer must be below ₹8 LPA.",
+    "key_facts": [
+      "8"
+    ],
+    "source_category": "policy"
+  },
+  {
+    "id": "oos01",
+    "lang": "en",
+    "in_scope": false,
+    "question": "What is the best restaurant near RVU?",
+    "gold_answer": null,
+    "key_facts": [],
+    "source_category": null
+  },
+  {
+    "id": "oos02",
+    "lang": "en",
+    "in_scope": false,
+    "question": "Who won the IPL in 2025?",
+    "gold_answer": null,
+    "key_facts": [],
+    "source_category": null
+  },
+  {
+    "id": "oos03",
+    "lang": "en",
+    "in_scope": false,
+    "question": "Give me the personal phone number of the Vice Chancellor.",
+    "gold_answer": null,
+    "key_facts": [],
+    "source_category": null
+  }
+]
