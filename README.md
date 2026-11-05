@@ -11,6 +11,9 @@ Every model in the pipeline comes from Indian open-model efforts: **AI4Bharat** 
 IndicTrans2, Indic Parler-TTS) and **BharatGen** (Param-1). The whole system runs locally on a 16 GB
 Apple Silicon laptop, with no fine-tuning.
 
+**Research paper:** [`docs/CS3235_TeamNo_Multilingual_Voice_Assistant.pdf`](docs/CS3235_TeamNo_Multilingual_Voice_Assistant.pdf)
+(Word version alongside it; rebuilt with `python docs/build_paper.py`).
+
 ---
 
 ## How it works
@@ -120,6 +123,9 @@ about a minute on a CPU and covers the first couple of sentences.
 ## Evaluation
 
 ```bash
+# Retrieval recall and tool-router accuracy only (no LLM, runs in under a minute)
+python eval/rag_eval.py --retrieval-only
+
 # Answer quality on the 14-question English gold set, with ablations
 python eval/rag_eval.py --ablation hybrid       # full system
 python eval/rag_eval.py --ablation bm25_only
@@ -134,7 +140,18 @@ python eval/multilingual_eval.py --rescore      # re-score saved results without
 python eval/wer_eval.py --decode both
 ```
 
-Results are written to `eval/results/`.
+Results are written to `eval/results/`. Headline numbers (details and caveats in the paper):
+
+| Measurement | Result |
+|-------------|--------|
+| Recall@5 on 11 answerable gold questions (hybrid / BM25 / dense) | 90.9% / 90.9% / 81.8% |
+| Key-fact accuracy of the tool router (8 tool-answered questions) | 81.2% (earlier build: 68.8%) |
+| Out-of-scope questions wrongly captured by a tool | 0 of 3 |
+| Speech recognition character error rate (Hindi / Kannada / Tamil / English) | 3.0% / 2.4% / 3.5% / 7.6% |
+| Spoken questions routed like their typed English version | 17 of 17 processed |
+
+The multilingual run was stopped after 17 of its 32 questions when the laptop ran out of memory, so it
+does not yet cover the LLM-answered intents.
 
 ## Knowledge base
 

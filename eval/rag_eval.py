@@ -30,6 +30,7 @@ sys.path.insert(0, str(ROOT))
 
 from loguru import logger
 
+from backend.app.pipeline import tools
 from backend.app.pipeline.orchestrator import run as run_pipeline
 from backend.app.pipeline.retrieve import retrieve
 from backend.app.schemas import AskRequest
@@ -189,6 +190,40 @@ def _answered_by(trace: list[dict]) -> str:
     return "llm"
 
 
+def retrieval_only(gold: list[dict], top_k: int) -> None:
+    """Recall@k of each retrieval mode, and key-fact accuracy of the tool router alone."""
+    in_scope = [item for item in gold if item.get("source_category")]
+    summary: dict = {"top_k": top_k, "n_in_scope": len(in_scope), "recall_at_k_pct": {}}
+    for mode in ("bm25", "dense", "hybrid"):
+        hits = sum(
+            any(c.get("category") == item["source_category"] for c in retrieve(item["question"], top_k=top_k, mode=mode))
+            for item in in_scope
+        )
+        summary["recall_at_k_pct"][mode] = round(100 * hits / len(in_scope), 1)
+
+    rows = []
+    for item in gold:
+        result = tools.tool_route(item["question"])
+        rows.append({
+            "id": item["id"],
+            "in_scope": item["in_scope"],
+            "tool": result["tool"] if result else "",
+            "fact_score": fact_overlap(result["answer"], item["key_facts"]) if result else "",
+            "answer": result["answer"] if result else "",
+        })
+    answered = [r for r in rows if r["tool"] and r["in_scope"]]
+    summary["tool_answered"] = len(answered)
+    summary["tool_key_fact_accuracy_pct"] = round(100 * sum(r["fact_score"] for r in answered) / len(answered), 1)
+    summary["tool_false_matches_out_of_scope"] = sum(1 for r in rows if r["tool"] and not r["in_scope"])
+
+    with (RESULTS_DIR / "tool_router_results.csv").open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(rows)
+    (RESULTS_DIR / "summary_retrieval.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    logger.success(f"Retrieval-only summary: {summary}")
+
+
 # ── Main ──────────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -200,7 +235,13 @@ def main() -> None:
         help="Which retrieval / routing mode to evaluate",
     )
     parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--retrieval-only", action="store_true",
+                        help="score retrieval recall for every mode and the tool router, without the LLM")
     args = parser.parse_args()
+
+    if args.retrieval_only:
+        retrieval_only(ensure_gold(), args.top_k)
+        return
 
     mode, use_tools = ABLATIONS[args.ablation]
     gold = ensure_gold()

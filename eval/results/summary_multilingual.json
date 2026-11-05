@@ -1,0 +1,38 @@
+{
+  "en": {
+    "n": 8,
+    "wer_pct": 18.4,
+    "cer_pct": 7.6,
+    "exact": 3,
+    "routed_n": 5,
+    "typed_same": 5,
+    "spoken_same": 5
+  },
+  "hi": {
+    "n": 8,
+    "wer_pct": 20.8,
+    "cer_pct": 3.0,
+    "exact": 5,
+    "routed_n": 4,
+    "typed_same": 4,
+    "spoken_same": 4
+  },
+  "kn": {
+    "n": 8,
+    "wer_pct": 31.2,
+    "cer_pct": 2.4,
+    "exact": 4,
+    "routed_n": 4,
+    "typed_same": 4,
+    "spoken_same": 4
+  },
+  "ta": {
+    "n": 8,
+    "wer_pct": 11.4,
+    "cer_pct": 3.5,
+    "exact": 5,
+    "routed_n": 4,
+    "typed_same": 4,
+    "spoken_same": 4
+  }
+}

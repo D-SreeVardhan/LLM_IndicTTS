@@ -1,52 +1,34 @@
 # Utterances Dataset
 
-Place audio recordings here for WER evaluation.
+Spoken versions of the eight intents in `../multilingual_qa.json`, one folder per language.
+`eval/multilingual_eval.py` generates them with the macOS system voices (Rishi for English,
+Lekha for Hindi, Soumya for Kannada, Vani for Tamil) and resamples them to 16 kHz mono.
 
 ## Directory structure
 
 ```
 utterances/
-  hi/
-    001.wav    # 16 kHz mono WAV
-    001.txt    # matching reference transcript (UTF-8)
-    002.wav
-    002.txt
+  en/  hi/  kn/  ta/
+    m01.wav    # 16 kHz mono WAV
+    m01.txt    # reference transcript (UTF-8), the question as written
     ...
-  kn/
-    001.wav
-    001.txt
-    ...
-  ta/
-    001.wav
-    001.txt
-    ...
+    m08.wav
+    m08.txt
 ```
 
-## Sources
+## Adding real recordings
 
-Collect at least 30 utterances per language covering campus vocabulary:
-
-1. **Kathbath** (standardised Indian ASR benchmark)
-   - https://github.com/AI4Bharat/Kathbath
-   - Use test splits for hi, kn, ta
-
-2. **IndicVoices**
-   - https://huggingface.co/datasets/ai4bharat/IndicVoices
-   - Filter by language; resample to 16 kHz mono
-
-3. **Team-recorded RVU questions** (strongly recommended)
-   - Record team members reading the Hindi/Kannada/Tamil translations of the
-     gold_qa.json questions (converted using IndicTrans2)
-   - This tests campus vocabulary: "CIE", "SEE", "hall ticket", "USN", "CGPA"
-
-## Conversion to 16 kHz mono WAV
+Any `<id>.wav` + `<id>.txt` pair placed in `hi/`, `kn/` or `ta/` is scored by `eval/wer_eval.py`.
+Recordings of real students reading the questions are the most useful addition (see the paper's
+limitations). Convert them first:
 
 ```bash
-ffmpeg -i input.mp3 -ar 16000 -ac 1 output.wav
+ffmpeg -i input.m4a -ar 16000 -ac 1 output.wav
 ```
 
-## Running the eval
+## Running the evals
 
 ```bash
-python eval/wer_eval.py --decode both --lang all
+python eval/multilingual_eval.py            # regenerate audio if missing, then ASR + routing
+python eval/wer_eval.py --decode both       # CTC vs RNNT word / character error rates
 ```

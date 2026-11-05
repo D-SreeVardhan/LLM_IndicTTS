@@ -1,0 +1,10 @@
+{
+  "ablation": "hybrid",
+  "top_k": 5,
+  "n_questions": 14,
+  "recall_at_k": 72.7,
+  "key_fact_accuracy_pct": 68.2,
+  "citation_precision_pct": 11.1,
+  "refusal_accuracy_pct": 33.3,
+  "avg_latency_ms": 103024.0
+}

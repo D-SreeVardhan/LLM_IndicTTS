@@ -1,0 +1,90 @@
+id,in_scope,question,gold_answer,predicted,refused,fact_score,latency_ms
+f01,True,What is the annual tuition fee for B.Tech (AIML) at RVU under the JEE-Mains seat category for AY 2026-27?,"₹5,00,000 per annum","Fee details (AY 2026-27):
+
+- **School of Computer Science & Engineering** | B. Tech (Hons) Computer Science and Engineering (· AIML – Artificial Intelligence and machine learning   · Data Science & Engineering   · Cloud computing   · Cyber security) – Tuition: ₹CET – 216: as per GOK.
+
+*Source: RVU Fee Structure AY 2026-27*",False,0.0,0.8
+f02,True,How much is the tuition fee for MBA at RVU?,"MBA tuition fees are ₹5,50,000 (Regular) or ₹6,25,000 (AI & Data Science / Global Financial Markets).","Fee details (AY 2026-27):
+
+- **School of Business** | MBA – Artificial Intelligence and Data Science (Data Science, Business Analytics, Artificial Intelligence (in collaboration with Microsoft)) – Tuition: ₹6,25,000/-
+- **School of Business** | MBA – Artificial Intelligence and Data Science (MBA – Global Financial Markets) – Tuition: ₹6,25,000/-
+- **School of Business** | MBA – Artificial Intelligence and Data Science (MBA (Regular)) – Tuition: ₹5,50,000/-
+- **School for Continuing Education and Professional Studies** | EMBA (Finance, Marketing, HR, Operations and Entrepreneurship) – Tuition: ₹1,34,000/-
+- **School of Liberal Arts & Sciences** | B.A (Hons) (Philosophy) – Tuition: ₹3,60,000/-
+- **School of Business** | B.B.A (Hons) (Digital Marketing) – Tuition: ₹2,25,000/-
+- **School of Business** | B.B.A (Hons) (BBA(Hons)) – Tuition: ₹2,50,000/-
+- **School of Business** | B.B.A (Hons) (BBA (Hons)) – Tuition: ₹2,40,000/-
+- **School of Business** | B.B.A (Hons) (BBA (Hons)) – Tuition: ₹2,25,000/-
+- **School of Law** | B.B.A LLB (Hons) (As approved by BCI) – Tuition: ₹2,50,000/-
+- **School of Law** | B.A. LLB (Hons) (As approved by BCI) – Tuition: ₹2,50,000/-
+- **School of Film, Media and Creative Arts** | B.A. (Acting (Film, TV and OTT)) – Tuition: ₹2,50,000/-
+
+*Source: RVU Fee Structure AY 2026-27*",False,1.0,0.2
+f03,True,What is the BCA fee at RVU?,"₹2,50,000 tuition fee plus ₹21,000 skill/exam fees per year.","Fee details (AY 2026-27):
+
+- **School of Computer Science & Engineering** | BCA (Hons) (Regular) – Tuition: ₹2,50,000/-
+
+*Source: RVU Fee Structure AY 2026-27*",False,0.5,0.1
+e01,True,When are the UG Semester End Examinations for the odd semester AY 2026-27?,7th December 2026 to 31st December 2026,"Academic calendar (AY 2026-27):
+
+| Type | Activity | Start | End |
+|------|----------|-------|-----|
+| UG | CIE Finalization & SEE Eligibility | 18th November 2026 | 20th November 2026 |
+| UG | Sem-End Examination | 07th December 2026 | 31st December 2026 |
+| UG | CIE Finalization & SEE Eligibility | 28th April 2027 | 30th April 2027 |
+| UG | Sem-End Examination | 18th May 2027 | 05th June 2027 |
+| UG | Summer Semester SEE + Practical | 28th June 2027 | 13th July 2027 |
+
+*Source: RVU Academic Calendar 2026-27*",False,1.0,0.2
+e02,True,What is the minimum CIE score required to appear for SEE at RVU?,Students must score at least 40% in CIE to appear for SEE.,"Academic calendar (AY 2026-27):
+
+| Type | Activity | Start | End |
+|------|----------|-------|-----|
+| PG | CIE Finalization & SEE Eligibility | 11th January 2027 |  |
+| PG | SEE Practical, Jury & Submission | 13th January 2027 | 18th January 2027 |
+| PG | Sem-End Examination (Theory) | 19th January 2027 | 30th January 2027 |
+| PG | CIE Finalization & SEE Eligibility | 17th May 2027 |  |
+| PG | SEE Practical, Jury & Submission | 19th May 2027 | 24th May 2027 |
+| PG | Sem-End Examination (Theory) | 25th May 2027 | 04th June 2027 |
+| PG | Summer Semester SEE | 12th July 2027 | 19th July 2027 |
+| UG | CIE Finalization & SEE Eligibility | 18th November 2026 | 20th November 2026 |
+| UG | Sem-End Examination | 07th December 2026 | 31st December 2026 |
+| UG | CIE Finalization & SEE Eligibility | 28th April 2027 | 30th April 2027 |
+| UG | Sem-End Examination | 18th May 2027 | 05th June 2027 |
+| UG | Summer Semester SEE + Practical | 28th June 2027 | 13th July 2027 |
+
+*Source: RVU Academic Calendar 2026-27*",False,0.0,0.2
+e03,True,When are hall tickets issued for the even semester 2027?,3rd May 2027 to 4th May 2027,"Academic calendar (AY 2026-27):
+
+| Type | Activity | Start | End |
+|------|----------|-------|-----|
+| PG | Hall Ticket | 12th January 2027 |  |
+| PG | Hall Ticket | 18th May 2027 |  |
+| UG | Hall Ticket | 23rd November 2026 | 24th November 2026 |
+| UG | Hall ticket | 03rd May 2027 | 04th May 2027 |
+
+*Source: RVU Academic Calendar 2026-27*",False,1.0,0.2
+e04,True,What attendance percentage is mandatory at RVU?,Students must maintain 80% attendance in every course.,[S2] The attendance requirement at RVU is 80%.,False,1.0,64884.4
+a01,True,"If a student cancels admission between 16 August 2026 and 30 August 2026, what refund do they get?",90% refund of first year full fees.,A student who cancels admission between 16 August 2026 and 30 August 2026 will receive a 90% refund.,False,1.0,22026.9
+a02,True,When does the UG induction start for AY 2026-27?,27th July 2026,"Academic calendar (AY 2026-27):
+
+| Type | Activity | Start | End |
+|------|----------|-------|-----|
+| UG | Inauguration & Induction | 27th July 2026 | 31st July 2026 |
+
+*Source: RVU Academic Calendar 2026-27*",False,1.0,2.3
+p01,True,How many company drives can a student attend at RVU placements?,A student may attend a maximum of 5 notified placement drives per cycle.,I don't have sufficient information to answer that confidently. Please reach out to Student Services (studentservices@rvu.edu.in).,True,0.0,60116.6
+p02,True,What CTC threshold applies for the 1.5x offer progression rule?,The student's existing offer must be below ₹8 LPA.,"**RVU Placement Policy Quick Reference (2027)**
+
+- **Governance**: Career & Alumni Relations (CAR) coordinates placements across Schools.
+- **Eligibility**: No academic backlogs, ≥ 80% pre-placement training attendance, completed experiential components, no pending STDC case.
+- **One Offer Rule (1×)**: Once your name appears on a recruiter's final list, you are considered ""placed.""
+- **Offer Progression (1.5×)**: Activated when ≥ 40% of eligible students in your School are placed or when the Dean announces activation. You may attend up to 4 additional drives if your current CTC is below ₹8 LPA and the new offer is ≥ 1.5× your current offer.
+- **Maximum opportunities**: 5 company drives per cycle (up to 2 additional at Dean's discretion once 40% placed).
+- **Dream Offer**: A dynamic benchmark above the School's historical highest CTC — participation is exempt from the 5-drive cap.
+- **Disciplinary violations** are referred to STDC; the student may not participate until a decision is issued.
+
+*Source: RVU Placement Policy Quick Reference (2027)*",False,1.0,2.6
+oos01,False,What is the best restaurant near RVU?,,"I'm sorry, but as an AI, I don't have access to real-time information or location-based services. I recommend using a map service like Google Maps or Yelp to find restaurants near RVU.",False,1.0,32832.6
+oos02,False,Who won the IPL in 2025?,,"I'm sorry, but as an AI, I don't have the ability to provide real-time information or future predictions. I recommend checking the latest sports news for the most accurate information.",False,1.0,257577.5
+oos03,False,Give me the personal phone number of the Vice Chancellor.,,I don't have sufficient information to answer that confidently. Please reach out to Controller of Examinations (coe@rvu.edu.in).,True,1.0,1004886.5

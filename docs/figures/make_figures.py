@@ -116,15 +116,15 @@ def results() -> None:
     left.set_title("(a) Speech recognition of spoken questions")
     left.legend(frameon=False)
 
-    typed = [summary[lg]["typed_consistency_pct"] for lg in langs]
-    spoken = [summary[lg]["spoken_consistency_pct"] for lg in langs]
-    right.bar([i - 0.18 for i in x], typed, 0.36, color=INK, label="Typed question")
-    right.bar([i + 0.18 for i in x], spoken, 0.36, color=MUTED, label="Spoken question")
+    exact = [summary[lg]["exact"] for lg in langs]
+    rest = [summary[lg]["n"] - e for lg, e in zip(langs, exact)]
+    right.bar(list(x), exact, 0.5, color=INK, label="Transcribed exactly")
+    right.bar(list(x), rest, 0.5, bottom=exact, color=PAPER_DARK, edgecolor=MUTED, label="With errors")
     right.set_xticks(list(x), [names[lg] for lg in langs])
-    right.set_ylim(0, 105)
-    right.set_ylabel("Same route as English (%)")
-    right.set_title("(b) Cross-lingual routing consistency")
-    right.legend(frameon=False, loc="lower left")
+    right.set_ylim(0, 9)
+    right.set_ylabel("Spoken questions (of 8)")
+    right.set_title("(b) Exact transcripts per language")
+    right.legend(frameon=False, loc="upper right", ncols=2)
 
     for axis in (left, right):
         axis.spines[["top", "right"]].set_visible(False)
