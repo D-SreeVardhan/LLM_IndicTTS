@@ -11,8 +11,12 @@ Every model in the pipeline comes from Indian open-model efforts: **AI4Bharat** 
 IndicTrans2, Indic Parler-TTS) and **BharatGen** (Param-1). The whole system runs locally on a 16 GB
 Apple Silicon laptop, with no fine-tuning.
 
-**Research paper:** [`docs/CS3235_TeamNo_Multilingual_Voice_Assistant.pdf`](docs/CS3235_TeamNo_Multilingual_Voice_Assistant.pdf)
+**Research paper:** [`docs/CS3235_Multilingual_Voice_Assistant.pdf`](docs/CS3235_Multilingual_Voice_Assistant.pdf)
 (Word version alongside it; rebuilt with `python docs/build_paper.py`).
+
+**Study guide:** [`docs/STUDY_GUIDE.md`](docs/STUDY_GUIDE.md) walks through every stage, from the
+microphone to the spoken answer, with the models, how they work, a real traced example and self-test
+questions.
 
 ---
 
@@ -224,7 +228,7 @@ LLM_Prj/
 ├── scripts/
 │   ├── ingest.py             Builds the knowledge base and index
 │   └── download_models.py    Downloads and smoke-tests the models
-├── docs/                     Research paper and figures
+├── docs/                     Research paper, figures and study guide
 ├── run.sh                    One-command launcher
 ├── requirements.txt
 └── .env.example
