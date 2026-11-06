@@ -26,10 +26,12 @@ _REFUSAL_PHRASES = [
     "not available",
 ]
 # Param-1 often declines in its own words: "I'm sorry, but I don't have specific information about …",
-# "as an AI, I don't have the ability to provide real-time information …"
+# "as an AI, I don't have the ability to provide real-time information …",
+# "I don't have access to real-time information or future events …"
 _REFUSAL_RE = re.compile(
     r"\bi (?:don't|do not) have (?:any |specific |enough |sufficient |the )?(?:that )?(?:specific )?information\b"
     r"|\bas an ai\b|\bi (?:don't|do not) have the ability\b"
+    r"|\bi (?:don't|do not) have access to (?:real-time|live|current|up-to-date)\b|\breal-time information\b"
 )
 _NUMBER_RE = re.compile(r"\d+")
 _LIST_MARKER_RE = re.compile(r"^\s*\d+[.)]\s", re.MULTILINE)

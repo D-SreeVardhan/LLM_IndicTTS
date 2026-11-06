@@ -85,6 +85,8 @@ def warm_up() -> None:
 
 _MAX_CONTEXT_CHUNKS = 5
 _WINDOW_CHARS = 360
+# Sentence end, not the dot in "B. Tech"; an inline [S1] tag stays with its sentence.
+_SENTENCE_END_RE = re.compile(r"(?<!\b[A-Z])[.!?](?:\s*\[S\d+\])?(?=\s|$)")
 _STOPWORDS = {
     "the", "a", "an", "is", "are", "be", "what", "when", "how", "much", "should", "for", "of",
     "to", "in", "at", "on", "and", "or", "i", "my", "do", "does", "can", "rvu", "university",
@@ -107,7 +109,28 @@ def _best_window(text: str, query: str, size: int) -> str:
         return sum(c > 0 for c in counts), sum(counts)
 
     best = max(starts, key=hits) if terms else 0
-    return text[best:best + size].strip()
+    window = text[best:_window_end(text, best + size, best + size // 2)].strip()
+    heading = re.match(r"#{1,3} [^\n]+", text)
+    if heading and best > heading.end():
+        window = f"{heading.group()}\n{window}"
+    return window
+
+
+def _window_end(text: str, end: int, floor: int) -> int:
+    """Move a window end onto a sentence boundary so passages never stop mid-word.
+
+    Finishes the current sentence if it ends within 160 characters, otherwise
+    falls back to the last sentence end (or space) inside the window.
+    """
+    if end >= len(text):
+        return len(text)
+    following = _SENTENCE_END_RE.search(text, end, end + 160)
+    if following:
+        return following.end()
+    inside = [m.end() for m in _SENTENCE_END_RE.finditer(text, floor, end)]
+    if inside:
+        return inside[-1]
+    return max(text.rfind(" ", floor, end), floor)
 
 
 def _build_system_prompt(context_blocks: list[str]) -> str:
@@ -130,10 +153,16 @@ def _build_system_prompt(context_blocks: list[str]) -> str:
     )
 
 
+def _drop_unfinished_sentence(answer: str) -> str:
+    """Cut an answer that hit the token cap back to its last complete sentence."""
+    ends = [m.end() for m in _SENTENCE_END_RE.finditer(answer)]
+    return answer[: ends[-1]].strip() if ends else answer
+
+
 def generate(
     query_en: str,
     context_chunks: list[dict],
-    max_new_tokens: int = 150,  # 150 is plenty for 3-5 sentence factual answers
+    max_new_tokens: int = 200,  # 3-5 sentence factual answers; a cut-off tail is trimmed below
 ) -> dict:
     """
     Generate a grounded English answer using Param1.
@@ -184,6 +213,8 @@ def generate(
 
     generated_tokens = output[0][inputs.shape[-1]:]
     answer = tok.decode(generated_tokens, skip_special_tokens=True).strip()
+    if len(generated_tokens) >= max_new_tokens:
+        answer = _drop_unfinished_sentence(answer)
     if mdl.device.type == "mps":
         torch.mps.empty_cache()  # release cached buffers so other models don't push the LLM into swap
 

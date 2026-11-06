@@ -143,6 +143,9 @@ _PUNCT_RUN_RE = re.compile(r"\s*([।|.])(?:\s*[।|.])+")
 # amounts as "2 lakh 50 thousand" survives translation and reads naturally aloud.
 _INDIAN_AMOUNT_RE = re.compile(r"\b\d{1,2}(?:,\d{2})*,\d{3}\b")
 
+# "10:00 am" comes out as "1" in Hindi and Tamil, while "10 am" and "4:30 pm" survive.
+_ON_THE_HOUR_RE = re.compile(r"\b(\d{1,2}):00\b")
+
 
 def _amount_in_words(match: re.Match) -> str:
     value = int(match.group().replace(",", ""))
@@ -159,6 +162,7 @@ def _amount_in_words(match: re.Match) -> str:
 def _split_sentences(text: str) -> list[str]:
     text = _MARKUP_RE.sub(" ", text)
     text = _INDIAN_AMOUNT_RE.sub(_amount_in_words, text)
+    text = _ON_THE_HOUR_RE.sub(r"\1", text)
     return [s.strip() for s in _SENTENCE_SPLIT_RE.split(text) if s and s.strip(" .")]
 
 
