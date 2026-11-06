@@ -386,7 +386,7 @@ def _calendar_answer(query: str) -> str | None:
 # ── Placement tool ────────────────────────────────────────────────────────
 
 _PLACEMENT_KEYWORDS = re.compile(
-    r"\b(placements?|job offer|dream offer|one offer|offer rule|offer progression|ctc|lpa|placement drives?|company drives?|stdc|placed|recruiters?|campus recruit)\b",
+    r"\b(placements?|job offer|dream offer|one offer|offer rule|offer progression|ctc|lpa|placement drives?|company drives?|job (?:camps?|drives?|fairs?)|stdc|placed|recruiters?|campus recruit)\b",
     re.I,
 )
 
@@ -534,22 +534,25 @@ def _catalogue_overview() -> str:
 
 # Topics answered by the campus guide passages. The tools' keywords are broad ("fee",
 # "when", "offered"), so "hostel fee" or "clubs offered" would otherwise get a wrong tool answer.
+# Keep these words out of tool territory: programme names ("Medical Laboratory Technology",
+# "Entrepreneurship"), calendar events ("Internship/Semester Break"), "placement cycle", and
+# "election", which is how IndicTrans2 renders the Tamil word for exam.
 _CAMPUS_GUIDE_TOPICS = re.compile(
     r"\b(hostels?|mess|warden|bus|buses|transport|shuttle|metro|library|canteen|cafeteria|food|"
     r"wi-?fi|internet|it helpdesk|medical cent(?:re|er)|doctor|insurance|counsell?(?:ing|ors?)|"
     r"wellbeing|mental health|ragging|grievances?|complaints?|harassment|clubs?|fest|festival|"
     r"gym|sports facilit\w*|bonafide|transcripts?|migration|certificates?|id card|identity card|"
-    r"portal|lms|mentors?|internships?|exchange|study abroad|parking|dress code|contacts?|"
+    r"portal|lms|mentors?|internships?(?!\s*(?:and\s+|/)\s*semester break)|exchange|study abroad|parking|dress code|contacts?|"
     r"office hours|address|located|location|reach|visitors?|curfew|night out|mess menu|"
-    r"labs?|laborator\w*|maker ?space|3d print\w*|gpu|incubat\w*|start-?ups?|entrepreneur\w*|"
+    r"labs?|computing labs?|maker ?space|3d print\w*|gpu|incubat\w*|start-?ups?|entrepreneurship club|"
     r"research (?:grants?|projects?|opportunit\w*)|undergraduate research|moocs?|nptel|swayam|coursera|"
     r"value[- ]added|online courses?|spoken english|kannada classes|writing centre|communication classes|"
     r"disabilit\w*|accessib\w*|wheelchair|scribe|safety|safe|cctv|escort|campus security|security (?:desk|guard|"
     r"control room|office)|emergenc\w*|ambulance|helplines?|lost and found|lost my|bank|atm|stationery|"
     r"print(?:ing|outs?)?|photocop\w*|xerox|auditorium|seminar halls?|amphitheatre|venue|student council|"
-    r"class representatives?|elections?|feedback|laptops?|software|plagiari\w*|academic integrity|misconduct|"
+    r"class representatives?|council elections?|student elections?|feedback|laptops?|software|plagiari\w*|academic integrity|misconduct|"
     r"nss|ncc|volunteer\w*|yoga|meditation|prayer|quiet room|green campus|sustainab\w*|solar|plastic|"
-    r"recycl\w*|bicycles?|cycles?|date of birth|personal details|change (?:my|of) name|name correction|"
+    r"recycl\w*|bicycles?|cycle-sharing|date of birth|personal details|change (?:my|of) name|name correction|"
     r"parents?|parent-teacher)\b",
     re.I,
 )
