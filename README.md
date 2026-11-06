@@ -168,12 +168,14 @@ does not yet cover the LLM-answered intents.
 
 | RVU Campus Guide (synthetic demo data) | campus |
 
-54 official passages, 32 structured fee records and 53 calendar events, plus 21 synthetic campus-guide
+54 official passages, 32 structured fee records and 53 calendar events, plus 43 synthetic campus-guide
 passages.
 
 The campus guide (`data/raw/synthetic/rvu_campus_guide.md`) is **made-up demo data** so the assistant can
-answer everyday student questions the official pages don't cover: hostel and bus charges, library and gym
-hours, Wi-Fi, clubs, certificates, anti-ragging, counselling, internships and key contacts. Answers drawn
+answer everyday student questions the official pages don't cover: hostel charges, rules and mess timings,
+buses, library and gym hours, Wi-Fi, clubs, certificates, anti-ragging, counselling, safety and emergency
+numbers, labs and the maker space, startups, research, online courses, laptops, plagiarism, NSS and NCC,
+accessibility, printing and the ATM, parents' updates and key contacts. Answers drawn
 from it cite "RVU Campus Guide (synthetic demo data)". Its figures are not real RVU figures. It was added
 after the paper's evaluation, so the paper's numbers describe the official corpus only. On the expanded
 corpus, hybrid Recall@5 is 81.8% (`eval/results/summary_retrieval_with_campus_guide.json`). The two
@@ -187,7 +189,9 @@ python scripts/ingest.py --synthetic-only
 ```
 
 Questions it can now answer: "What is the hostel fee?", "Is there a bus service?", "When is the library
-open?", "How do I get a bonafide certificate?", "Who do I contact about ragging?"
+open?", "How do I get a bonafide certificate?", "Who do I contact about ragging?", "What are the emergency
+numbers?", "Do I need a laptop?", "Can I get credits for NPTEL courses?", "Is there an ATM on campus?",
+"How do I get support for my startup idea?"
 
 ## Project structure
 
