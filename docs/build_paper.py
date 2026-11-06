@@ -252,7 +252,7 @@ def build() -> None:
                "Built on Indian Open Models", 16, bold=True, after=8)
     p.centered("Desu Sree Vardhan (1RUA24CSE7004)", 12)
     p.centered("School of Computer Science and Engineering, RV University, Bengaluru, India", 12)
-    p.centered("[email address]   |   Guide: [Faculty Name]", 11, after=12)
+    p.centered("Guide: Manjul Krishna Gupta", 11, after=12)
 
     p.lead("Abstract— ",
            "Administrative information at Indian universities, such as fees, examination dates and placement "
@@ -513,7 +513,7 @@ def build() -> None:
            "Future work: calibrated refusal, transliterated English speech, streamed synthesis and real users.")
 
     p.h1("Acknowledgment")
-    p.para("The author thanks [Faculty Name], School of Computer Science and Engineering, RV University, for "
+    p.para("The author thanks Manjul Krishna Gupta, School of Computer Science and Engineering, RV University, for "
            "guidance, and AI4Bharat (IIT Madras) and the BharatGen consortium for releasing the open models on "
            "which this work is built.")
 
