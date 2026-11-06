@@ -30,6 +30,7 @@ OUT = ROOT / "docs" / "CS3235_TeamNo_Multilingual_Voice_Assistant.docx"
 
 REPO_URL = "https://github.com/D-SreeVardhan/LLM_IndicTTS"
 LANG_NAMES = {"en": "English", "hi": "Hindi", "kn": "Kannada", "ta": "Tamil"}
+BODY_LINE_SPACING = 1.15
 
 
 # ── Document helpers ─────────────────────────────────────────────────────
@@ -47,8 +48,8 @@ class Paper:
         styles = self.doc.styles
         normal = styles["Normal"]
         normal.font.size = Pt(12)
-        normal.paragraph_format.line_spacing = 1.5
-        normal.paragraph_format.space_after = Pt(2)
+        normal.paragraph_format.line_spacing = BODY_LINE_SPACING
+        normal.paragraph_format.space_after = Pt(4)
         for name, size in (("Heading 1", 13), ("Heading 2", 12)):
             st = styles[name]
             st.font.size = Pt(size)
@@ -120,7 +121,7 @@ class Paper:
         for item in items:
             p = self.doc.add_paragraph(style="List Bullet")
             p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-            p.paragraph_format.line_spacing = 1.5
+            p.paragraph_format.line_spacing = BODY_LINE_SPACING
             self._runs(p, item)
 
     def equation(self, text: str, number: int) -> None:
