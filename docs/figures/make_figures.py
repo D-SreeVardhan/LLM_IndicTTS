@@ -37,61 +37,77 @@ def _box(ax, x, y, w, h, title, sub, face=PAPER_DARK, edge=INK, title_colour=INK
     ax.text(x + w / 2, y + h * 0.28, sub, ha="center", va="center", fontsize=8.5, color=MUTED)
 
 
-def _arrow(ax, x1, y1, x2, y2, label=None, colour=INK, dashed=False):
-    ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>", mutation_scale=11,
-                                 lw=1.1, color=colour, linestyle="--" if dashed else "-"))
-    if label:
-        ax.text((x1 + x2) / 2, (y1 + y2) / 2 + 0.12, label, ha="center", va="bottom",
-                fontsize=8, color=colour, style="italic")
+def _connector(ax, points, colour=INK, dashed=False):
+    """Orthogonal connector through `points` (each turn is 90 degrees), arrowhead on the last leg."""
+    style = "--" if dashed else "-"
+    xs, ys = zip(*points[:-1])
+    ax.plot(xs, ys, color=colour, lw=1.1, linestyle=style, solid_capstyle="butt")
+    ax.add_patch(FancyArrowPatch(points[-2], points[-1], arrowstyle="-|>", mutation_scale=11,
+                                 lw=1.1, color=colour, linestyle=style, shrinkA=0, shrinkB=0))
+
+
+def _label(ax, x, y, text, colour, ha="left"):
+    ax.text(x, y, text, ha=ha, va="center", fontsize=8, color=colour, style="italic")
 
 
 def architecture() -> None:
-    fig, ax = plt.subplots(figsize=(10, 4.6))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 4.6)
+    """Three rows that snake: input → router (left to right), retrieval → guard (right to left),
+    then the spoken answer (right to left). The tool path runs down a lane right of the grid."""
+    fig, ax = plt.subplots(figsize=(10, 4.4))
+    ax.set_xlim(0, 10.3)
+    ax.set_ylim(0, 4.4)
     ax.axis("off")
 
-    w, h = 1.55, 0.85
-    top = 3.35
-    # Input lane
-    _box(ax, 0.1, top, w, h, "Speech / Text", "hi · kn · ta · en", face=PAPER, edge=OXBLOOD,
+    w, h, step = 1.6, 0.85, 1.95
+    col = [0.1 + i * step for i in range(5)]
+    top, mid, low = 3.4, 1.8, 0.2
+
+    def left(c, y):
+        return col[c], y + h / 2
+
+    def right(c, y):
+        return col[c] + w, y + h / 2
+
+    def above(c, y):
+        return col[c] + w / 2, y + h
+
+    def below(c, y):
+        return col[c] + w / 2, y
+
+    # Row 1: question in, translated to English, routed
+    _box(ax, col[0], top, w, h, "Speech / Text", "hi · kn · ta · en", face=PAPER, edge=OXBLOOD,
          title_colour=OXBLOOD)
-    _box(ax, 2.05, top, w, h, "IndicConformer", "600M · RNNT (ASR)")
-    _box(ax, 4.0, top, w, h, "Script normaliser", "code-mix → native")
-    _box(ax, 5.95, top, w, h, "IndicTrans2", "indic→en · 200M")
-    _arrow(ax, 0.1 + w, top + h / 2, 2.05, top + h / 2)
-    _arrow(ax, 2.05 + w, top + h / 2, 4.0, top + h / 2)
-    _arrow(ax, 4.0 + w, top + h / 2, 5.95, top + h / 2)
+    _box(ax, col[1], top, w, h, "IndicConformer", "600M · RNNT (ASR)")
+    _box(ax, col[2], top, w, h, "Script normaliser", "code-mix → native")
+    _box(ax, col[3], top, w, h, "IndicTrans2", "indic→en · 200M")
+    _box(ax, col[4], top, w, h, "Intent router", "regex + keywords", face=PAPER, edge=TURMERIC)
+    for c in range(4):
+        _connector(ax, [right(c, top), left(c + 1, top)])
 
-    # Router
-    mid = 1.85
-    _box(ax, 7.9, mid + 0.75, 1.95, h, "Intent router", "regex + keywords", face=PAPER, edge=TURMERIC)
-    _arrow(ax, 5.95 + w, top + h / 2, 8.85, mid + 0.75 + h)
+    # Row 2: retrieval path, right to left
+    _box(ax, col[4], mid, w, h, "Hybrid retrieval", "BM25 + bge-m3 · RRF")
+    _box(ax, col[3], mid, w, h, "Param-1 2.9B", "grounded, cited answer")
+    _box(ax, col[2], mid, w, h, "Grounding guard", "citation + grounding")
+    _connector(ax, [below(4, top), above(4, mid)], colour=MUTED)
+    _label(ax, col[4] + w / 2 + 0.08, (top + mid + h) / 2, "no match", MUTED)
+    _connector(ax, [left(4, mid), right(3, mid)])
+    _connector(ax, [left(3, mid), right(2, mid)])
 
-    # Tool path
-    _box(ax, 7.9, mid - 0.55, 1.95, h, "Structured tools", "fees · calendar · placement")
-    _arrow(ax, 8.85, mid + 0.75, 8.85, mid - 0.55 + h, label=None, colour=TURMERIC)
-    ax.text(8.95, mid + 0.42, "match", fontsize=8, color=TURMERIC, style="italic")
-
-    # RAG path
-    _box(ax, 5.95, mid + 0.1, w, h, "Hybrid retrieval", "BM25 + bge-m3 · RRF")
-    _box(ax, 4.0, mid + 0.1, w, h, "Param-1 2.9B", "grounded, cited answer")
-    _box(ax, 2.05, mid + 0.1, w, h, "Grounding guard", "citation + score check")
-    _arrow(ax, 7.9, mid + 0.75 + h / 2, 5.95 + w, mid + 0.1 + h / 2, colour=MUTED)
-    ax.text(7.05, mid + 1.05, "no match", fontsize=8, color=MUTED, style="italic")
-    _arrow(ax, 5.95, mid + 0.1 + h / 2, 4.0 + w, mid + 0.1 + h / 2)
-    _arrow(ax, 4.0, mid + 0.1 + h / 2, 2.05 + w, mid + 0.1 + h / 2)
-
-    # Output lane
-    low = 0.15
-    _box(ax, 2.05, low, w, h, "IndicTrans2", "en→indic · 200M")
-    _box(ax, 4.0, low, w, h, "Indic Parler-TTS", "938M · 44.1 kHz")
-    _box(ax, 5.95, low, w, h, "Answer + audio", "sources shown as chips", face=PAPER, edge=OXBLOOD,
+    # Row 3: answer out, right to left; the tool answer joins IndicTrans2 from the right
+    _box(ax, col[4], low, w, h, "Structured tools", "fees · dates · placement")
+    _box(ax, col[2], low, w, h, "IndicTrans2", "en→indic · 200M")
+    _box(ax, col[1], low, w, h, "Indic Parler-TTS", "938M · 44.1 kHz")
+    _box(ax, col[0], low, w, h, "Answer + audio", "with source chips", face=PAPER, edge=OXBLOOD,
          title_colour=OXBLOOD)
-    _arrow(ax, 2.05 + w / 2, mid + 0.1, 2.05 + w / 2, low + h)
-    _arrow(ax, 7.9 + 0.2, mid - 0.55 + h / 2, 2.05 + w, low + h * 0.75, colour=TURMERIC, dashed=True)
-    _arrow(ax, 2.05 + w, low + h / 2, 4.0, low + h / 2)
-    _arrow(ax, 4.0 + w, low + h / 2, 5.95, low + h / 2)
+    _connector(ax, [below(2, mid), above(2, low)])
+    _connector(ax, [left(2, low), right(1, low)])
+    _connector(ax, [left(1, low), right(0, low)])
+
+    lane = col[4] + w + 0.35
+    _connector(ax, [right(4, top), (lane, top + h / 2), (lane, low + h / 2), right(4, low)],
+               colour=TURMERIC, dashed=True)
+    _label(ax, lane + 0.08, (mid + low + h) / 2 + 0.4, "match", TURMERIC)
+    _connector(ax, [left(4, low), right(2, low)], colour=TURMERIC, dashed=True)
 
     fig.savefig(HERE / "architecture.png", dpi=300, bbox_inches="tight", facecolor="white")
     plt.close(fig)

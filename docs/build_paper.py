@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIG = ROOT / "docs" / "figures"
 RESULTS = ROOT / "eval" / "results"
 TEMPLATE = ROOT / "CS3235 Research Paper Template – RVU_v2.0.docx"
-OUT = ROOT / "docs" / "CS3235_TeamNo_Multilingual_Voice_Assistant.docx"
+OUT = ROOT / "docs" / "CS3235_Multilingual_Voice_Assistant.docx"
 
 REPO_URL = "https://github.com/D-SreeVardhan/LLM_IndicTTS"
 LANG_NAMES = {"en": "English", "hi": "Hindi", "kn": "Kannada", "ta": "Tamil"}
@@ -358,7 +358,7 @@ def build() -> None:
            "Param-1 writes a cited answer and the guard accepts or refuses it. The answer is translated back and "
            "spoken by Indic Parler-TTS.")
     p.figure([FIG / "architecture.png"], "Fig. 1: Proposed system architecture. Solid arrows show the "
-             "retrieval path; the dashed arrow shows the tool path, which skips the LLM.", width=4.9)
+             "retrieval path; dashed arrows show the tool path, which skips the LLM.", width=6.0)
     p.h2("5.2 Model Description")
     p.para("Table 2 lists the models, used as released. IndicConformer has CTC and RNNT heads; RNNT is used "
            "because it conditions on earlier tokens. Param-1, a decoder-only Transformer, is the BharatGen model "
